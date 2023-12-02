@@ -1,3 +1,7 @@
+
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 public class LIBRARIANLOG extends javax.swing.JFrame {
 
     public LIBRARIANLOG() {
@@ -103,6 +107,31 @@ public class LIBRARIANLOG extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+           String enteredUsername = jTextField1.getText();
+    String enteredPassword = new String(jPasswordField1.getPassword());
+     if (enteredUsername.equals("LIB")&&enteredPassword.equals("LIB123")){
+                try {
+            
+            String adminFilePath = "LIBRARIANSEC.java";
+
+         
+            Process compileProcess = new ProcessBuilder("javac", adminFilePath).start();
+            int compileExitCode = compileProcess.waitFor();
+
+            if (compileExitCode == 0) {
+                
+                String adminClassName = "LIBRARIANSEC"; 
+                Process runProcess = new ProcessBuilder("java", adminClassName).start();
+             } else {
+                System.out.println("Compilation error in LIBRARIANSEC.java");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+     }
+     else{
+        JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE); 
+     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
    

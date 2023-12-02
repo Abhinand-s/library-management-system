@@ -1,3 +1,7 @@
+
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 public class Adminlog extends javax.swing.JFrame {
 
    
@@ -97,7 +101,33 @@ public class Adminlog extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // ToDO add your handling code here:
+         String enteredUsername = jTextField1.getText();
+    String enteredPassword = new String(jPasswordField1.getPassword());
+     if (enteredUsername.equals("ADMIN")&&enteredPassword.equals("ADMIN123")){
+                try {
+            
+            String adminFilePath = "ADMINSECTION.java";
+
+         
+            Process compileProcess = new ProcessBuilder("javac", adminFilePath).start();
+            int compileExitCode = compileProcess.waitFor();
+
+            if (compileExitCode == 0) {
+                
+                String adminClassName = "ADMINSECTION"; 
+                Process runProcess = new ProcessBuilder("java", adminClassName).start();
+             } else {
+                System.out.println("Compilation error in ADMINSECTION.java");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+     }
+     else{
+        JOptionPane.showMessageDialog(this, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE); 
+     }
+   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -106,10 +136,8 @@ public class Adminlog extends javax.swing.JFrame {
 
    public static void main(String args[]) {
        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Adminlog().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Adminlog().setVisible(true);
         });
     }
 
