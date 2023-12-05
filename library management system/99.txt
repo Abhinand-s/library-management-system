@@ -1,0 +1,82 @@
+CREATE TABLE librarian (
+  id int NOT NULL,
+  name varchar(100) NOT NULL,
+  password varchar(100) NOT NULL,
+  email varchar(100) NOT NULL,
+  address varchar(200) NOT NULL,
+  city varchar(100) NOT NULL,
+  contact varchar(20) NOT NULL,
+  PRIMARY KEY (id)
+) ;
+
+INSERT INTO librarian (id, name, password, email,address, city, contact) VALUES
+(1, 'Prabhakar', 'ppp', 'prabhakar@gmail.com', 'javatpoint', 'noida', '9998328238');
+INSERT INTO librarian (id, name, password, email,address, city, contact) VALUES
+(4, 'sumedh', 'sumesh', 'sumesh@gmail.com', 'Kuch Bhi', 'noida', '93823932823');
+INSERT INTO librarian (id, name, password, email,address, city, contact) VALUES
+(6, 'abhi', 'abhi', 'abhi@gmail.com', 'javatpoint', 'noida', '92393282323');
+
+
+CREATE SEQUENCE library_seq;
+
+
+CREATE TRIGGER libary_bi
+BEFORE INSERT ON librarian
+FOR EACH ROW
+BEGIN
+  SELECT library_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+CREATE TABLE  books (
+  id int NOT NULL,
+  callno varchar(100) NOT NULL UNIQUE,
+  name varchar(100) NOT NULL,
+  author varchar(100) NOT NULL,
+  publisher varchar(100) NOT NULL,
+  quantity int NOT NULL,
+  issued int  default 0,
+  added_date date default sysdate,
+  PRIMARY KEY (id)
+);
+
+
+CREATE SEQUENCE BOOK_seq;
+
+
+CREATE or replace TRIGGER BOOK_bi
+BEFORE INSERT ON BOOKS
+FOR EACH ROW
+BEGIN
+  SELECT BOOK_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
+
+
+INSERT INTO books ( callno, name, author, publisher, quantity, issued) VALUES('A@4', 'C In Depth', 'Shrivastav', 'BPB', 2, 2);
+
+CREATE TABLE  issuebooks (
+  id int NOT NULL,
+  bookcallno varchar(50) NOT NULL,
+  studentid int NOT NULL,
+  studentname varchar(50) NOT NULL,
+  studentcontact varchar(20) NOT NULL,
+  issued date  DEFAULT sysdate,
+  PRIMARY KEY (id)
+);
+
+
+CREATE SEQUENCE ISSUEBOOK_seq;
+
+
+CREATE or replace TRIGGER ISSUEBOOK_bi
+BEFORE INSERT ON ISSUEBOOKS
+FOR EACH ROW
+BEGIN
+  SELECT ISSUEBOOK_seq.nextval
+  INTO :new.id
+  FROM dual;
+END;
